@@ -1,10 +1,12 @@
-function traverseAround(squareArray, remaining) {
-  // create variables
-  const resultArr = [];
-  const numRows = squareArray.length;
-  const numCols = numRows;    // because the array is square
+function traverseAround(squareArray, resultArr, remaining) {
+  // const numCols = numRows;    // because the array is square
+  [ resultArr, remaining ] = traverseThreeQuarters(squareArray, resultArr, remaining);
+  [ resultArr, remaining ] = traverseLastQuarter(squareArray, resultArr, remaining);
+  
+  return [resultArr, remaining];
+}
 
-
+function traverseThreeQuarters(squareArray, resultArr, remaining) {
   // 1 - capture elements in minimum row index - traversing columns
   for (let c = remaining.cols[0]; c <= remaining.cols[1]; c++) {
     resultArr.push(squareArray[remaining.rows[0]][c]);
@@ -23,6 +25,14 @@ function traverseAround(squareArray, remaining) {
   }
   remaining.rows[1]--;
 
+  return [resultArr, remaining];
+}
+
+function traverseLastQuarter(squareArray, resultArr, remaining) {
+  // create variables
+  const numRows = squareArray.length;
+  const numCols = numRows;    // because the array is square
+
   // 4 - capture elements in reverse order in minimum column index (and add 1 to min col idx) - traversing rows
   for (let r = remaining.rows[1]; r >= remaining.rows[0]; r--) {
     resultArr.push(squareArray[r][remaining.cols[0]]);
@@ -31,6 +41,5 @@ function traverseAround(squareArray, remaining) {
   
   return [resultArr, remaining];
 }
-
 
 module.exports = traverseAround;
