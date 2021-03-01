@@ -1,78 +1,108 @@
-import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import SnackOrBoozeApi from "./Api";
+import "./NewMenuItemForm.css";
 
-const NewMenuItemForm = (props) => {
+const NewMenuItemForm = () => {
+  const INITIAL_STATE = {
+    name: "",
+    itemType: "",
+    description: "",
+    recipe: "",
+    serve: ""
+  };
+  const [formData, setFormData] = useState(INITIAL_STATE);
+  const history = useHistory();
+
+  // handleChange updates formData with every change to form fields
+  const handleChange = evt => {
+    const { name, value } = evt.target;
+    setFormData(formData => ({
+      ...formData,
+      [name]: value
+    }));
+  };
+  
+  // handleSubmit 
+  async function handleSubmit(evt) {
+    evt.preventDefault();
+    const itemType = formData.itemType + 's';
+    const id = formData.name.toLowerCase().split(' ').join('-');
+    const menuItem = { id, ...formData };
+    delete menuItem.itemType;
+    setFormData(INITIAL_STATE);
+    console.log("ITEM TYPE: ", itemType);
+    await SnackOrBoozeApi.postMenuItem(menuItem, itemType);
+    history.push(`/${itemType}`);
+  };
+ 
   return (
-    <Form>
-      <FormGroup>
-        <Label for="exampleEmail">Email</Label>
-        <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="examplePassword">Password</Label>
-        <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleSelect">Select</Label>
-        <Input type="select" name="select" id="exampleSelect">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleSelectMulti">Select Multiple</Label>
-        <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleText">Text Area</Label>
-        <Input type="textarea" name="text" id="exampleText" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="exampleFile">File</Label>
-        <Input type="file" name="file" id="exampleFile" />
-        <FormText color="muted">
-          This is some placeholder block-level help text for the above input.
-          It's a bit lighter and easily wraps to a new line.
-        </FormText>
-      </FormGroup>
-      <FormGroup tag="fieldset">
-        <legend>Radio Buttons</legend>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            Option one is this and that—be sure to include why it's great
-          </Label>
+    <div className="NewMenuItemForm">
+      <h1>Add a Menu Item!</h1>
+      <Form 
+        className="NewMenuItemForm-form"
+        onSubmit={handleSubmit}
+      >
+        <FormGroup>
+          <Label for="name">Item Name: </Label>
+          <Input 
+            type="text" 
+            name="name" 
+            id="name" 
+            placeholder="Name of menu item"
+            value={formData.name}
+            onChange={handleChange}
+          />
         </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            Option two can be something else and selecting it will deselect option one
-          </Label>
+        <FormGroup>
+          <Label for="itemType">Type</Label>
+          <Input type="select" 
+            name="itemType" 
+            id="itemType"
+            value={formData.itemType}
+            onChange={handleChange}
+          >
+            <option>snack</option>
+            <option>drink</option>
+          </Input>
         </FormGroup>
-        <FormGroup check disabled>
-          <Label check>
-            <Input type="radio" name="radio1" disabled />{' '}
-            Option three is disabled
-          </Label>
+        <FormGroup>
+          <Label for="description">Description</Label>
+          <Input 
+            type="text"
+            name="description" 
+            id="description" 
+            placeholder="Description of the menu item"
+            value={formData.description}
+            onChange={handleChange}
+          />
         </FormGroup>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" />{' '}
-          Check me out
-        </Label>
-      </FormGroup>
-      <Button>Submit</Button>
-    </Form>
+        <FormGroup>
+          <Label for="recipe">Recipe</Label>
+          <Input 
+            type="text" 
+            name="recipe" 
+            id="recipe" 
+            placeholder="Recipe for the menu item" 
+            value={formData.recipe}
+            onChange={handleChange}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="serve">Serve</Label>
+          <Input 
+            type="text" 
+            name="serve" 
+            id="serve" 
+            placeholder="Describe how to serve the menu item" 
+            value={formData.serve}
+            onChange={handleChange}
+          />
+        </FormGroup>
+        <Button>Submit</Button>
+      </Form>
+    </div>
   );
 }
 
