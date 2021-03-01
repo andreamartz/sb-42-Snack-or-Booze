@@ -41,3 +41,15 @@ A: Some differences between class-based components and functional components are
 - What are some of the problems that hooks were designed to solve?
 A: Class-based components are fraught with problems and inconveniences. They work, but functional components are much nicer, because they can use hooks to solve a lot of the problems with class-based components. 
 1. Putting all pieces of state in one place (as in a class-based component) is clunky. With the useState hook, we can have many pieces of state and update them separately, which allows more modularity.
+
+Problems hooks were designed to solve:
+1. **Event handlers and instance methods don't naturally play nicely together.**  setState works fine when used in a callback function for an event handler on an element, but doing it this way is not ideal, because a new function will be created every time the component is rendered. However, if we try to pull that function out into an instance method and call it in the event handler using `this.methodName`, we run into another problem. In the event handler, we lose the context of `this` _unless_ we fix this problem in the constructor by binding the value of `this` (referring to an instance of the component) to a copy of that instance method. Then, we call the bound method in the event handler. This approach is complicated and clunky, but it's necessary with class components.
+
+2. **There are a lot of lifecycle methods, and they all run at different times in the component lifecycle.** In a functional component, there is a single hook (useEffect) that can serve the same purpose as all of the lifecycle methods.
+
+3. **There is no good way to share code/logic between lifecycle methods on a component.** Hooks take care of this in functional components.
+
+4. **There is no good way to share logic/functionality among class components.** Class components rely on `this.state` and `this.props`, and those can't be moved into a separate function easily.
+
+4. Putting all pieces of state in one place (as in a class-based component) is clunky. It also means that we have to be very careful with how we name the pieces of state. The names should be universal enough to work with many use cases, but not so abstract as to be confusing. With the useState hook, we can have many pieces of state and name and update them separately, which allows for more flexibility and modularity.
+
