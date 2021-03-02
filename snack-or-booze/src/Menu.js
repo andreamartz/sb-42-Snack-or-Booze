@@ -20,7 +20,7 @@ import {
   ListGroupItem
 } from "reactstrap";
 
-function Menu({ items, itemType }) {  // 'category' used to be 'snacks'
+function Menu({ items, itemType }) {  
   return (
     <section className="col-md-4">
       <Card>

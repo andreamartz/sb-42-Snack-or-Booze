@@ -13,3 +13,7 @@
 .NewMenuItemForm-form {
     width: 100%;
 }
+
+.NewMenuItemForm-error {
+    color: red;
+}
