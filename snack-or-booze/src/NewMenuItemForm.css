@@ -1,0 +1,19 @@
+.NewMenuItemForm {
+    background-color: #101010d1;
+    color: #f0f2f5;
+    border: 20px solid rgba(16, 16, 16, 0.63);
+    box-shadow: inset 0 0 0 2px #ffffff;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 40%;
+    max-width: 600px;
+    min-width: 400px;
+}
+
+.NewMenuItemForm-form {
+    width: 100%;
+}
+
+.NewMenuItemForm-error {
+    color: red;
+}

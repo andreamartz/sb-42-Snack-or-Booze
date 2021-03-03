@@ -1,6 +1,16 @@
+/**
+ * Menu component:
+ * Displays a listing of the menu items in a given category (i.e., snacks or drinks)
+ * 
+ * Props: 
+ * State: 
+ * 
+ * Line 39: need to use either useParams or a computed property for 'items'
+ */
+
 import React from "react";
 import { Link } from "react-router-dom";
-import "./FoodMenu.css";
+import "./Menu.css";
 import {
   Card,
   CardBody,
@@ -10,22 +20,21 @@ import {
   ListGroupItem
 } from "reactstrap";
 
-function FoodMenu({ snacks }) {
+function Menu({ items, itemType }) {  
   return (
     <section className="col-md-4">
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">
-            Food Menu
+            Menu
           </CardTitle>
           <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            Checkout our menu of {itemType}!
           </CardText>
           <ListGroup>
-            {snacks.map(snack => (
-              <Link to={`/snacks/${snack.id}`} key={snack.id}>
-                <ListGroupItem>{snack.name}</ListGroupItem>
+            {items.map(item => (
+              <Link to={`/${itemType}/${item.id}`} key={item.id}>
+                <ListGroupItem>{item.name}</ListGroupItem>
               </Link>
             ))}
           </ListGroup>
@@ -35,4 +44,4 @@ function FoodMenu({ snacks }) {
   );
 }
 
-export default FoodMenu;
+export default Menu;
