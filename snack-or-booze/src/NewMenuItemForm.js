@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import SnackOrBoozeApi from "./Api";
 import "./NewMenuItemForm.css";
 
-const NewMenuItemForm = () => {
+const NewMenuItemForm = ({ items, setItems }) => {
   const history = useHistory();
 
   const formik = useFormik({
@@ -41,6 +41,7 @@ const NewMenuItemForm = () => {
       const menuItem = { id, ...values };
       delete menuItem.itemType;
       await SnackOrBoozeApi.postMenuItem(menuItem, values.itemType);
+      setItems([ ...items, menuItem ]);
       history.push(`/${values.itemType}`);
     }
   });
