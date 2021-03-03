@@ -30,12 +30,15 @@ function App() {
   if (isLoading) {
     return <p>Loading &hellip;</p>;
   }
+  const setItems = (items) => {
+    
+  }
 
   return (
     <div className="App">
       <NavBar />
       <main>
-        <Routes drinks={drinks} snacks={snacks}/>
+        <Routes drinks={drinks} snacks={snacks} setDrinks={setDrinks} setSnacks={setSnacks} />
       </main>
     </div>
   );

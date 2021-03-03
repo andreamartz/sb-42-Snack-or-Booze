@@ -21,6 +21,7 @@ import {
 } from "reactstrap";
 
 function Menu({ items, itemType }) {  
+  console.log("items FROM MENU: ", items, itemType);
   return (
     <section className="col-md-4">
       <Card>
