@@ -1,19 +1,18 @@
 import React from "react";
-import { Card, CardBody, CardTitle } from "reactstrap";
+import { Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
+import "./Home.css";
 
 function Home({ snacks, drinks }) {
   return (
-    <section className="col-md-8">
+    <section className="Home col-md-8">
       <Card>
         <CardBody className="text-center">
-          <CardTitle>
-            <h3 className="font-weight-bold">
+          <CardTitle className="font-weight-bold h3 Home-CardTitle">
               Welcome to Silicon Valley's premier dive cafe!
-            </h3>
-            <p className="font-weight-bold">
-              We offer {snacks.length} types of snacks and {drinks.length} types of drinks.
-            </p>
           </CardTitle>
+          <CardSubtitle className="font-weight-bold h5">
+              We offer {snacks.length} types of snacks and {drinks.length} types of drinks.
+            </CardSubtitle>
         </CardBody>
       </Card>
     </section>

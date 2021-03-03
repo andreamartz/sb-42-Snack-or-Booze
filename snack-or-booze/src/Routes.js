@@ -6,34 +6,7 @@ import Menu from "./Menu";
 import MenuItem from "./MenuItem";
 import NewMenuItemForm from "./NewMenuItemForm";
 
-function Routes() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [snacks, setSnacks] = useState([]);
-  const [drinks, setDrinks] = useState([]);
-
-  useEffect(() => {
-    async function getSnacks() {
-      let snacks = await SnackOrBoozeApi.getSnacks();
-      setSnacks(snacks);
-      setIsLoading(false);
-    }
-    getSnacks();
-  }, []);
-
-  // NOTE: I'm not sure if I should have combined these two useEffects into one function (e.g., getMenuItems)
-  // where I would make two separate API calls and update the two pieces of state separately
-  useEffect(() => {
-    async function getDrinks() {
-      let drinks = await SnackOrBoozeApi.getDrinks();
-      setDrinks(drinks);
-      setIsLoading(false);
-    }
-    getDrinks();
-  }, []);
-  
-  if (isLoading) {
-    return <p>Loading &hellip;</p>;
-  }
+function Routes({ drinks, snacks }) {
 
   return (
     <Switch>
