@@ -1,5 +1,11 @@
+/**
+ * traverseAround captures items from a square array by traveling in a spiraling clockwise direction. 
+ * 
+ * It returns the flat array.
+ * 
+ */
+
 function traverseAround(squareArray, resultArr, remaining) {
-  // const numCols = numRows;    // because the array is square
   [ resultArr, remaining ] = traverseThreeQuarters(squareArray, resultArr, remaining);
   [ resultArr, remaining ] = traverseLastQuarter(squareArray, resultArr, remaining);
   
@@ -7,19 +13,19 @@ function traverseAround(squareArray, resultArr, remaining) {
 }
 
 function traverseThreeQuarters(squareArray, resultArr, remaining) {
-  // 1 - capture elements in minimum row index - traversing columns
+  // 1 - Traverse columns of top remaining row
   for (let c = remaining.cols[0]; c <= remaining.cols[1]; c++) {
     resultArr.push(squareArray[remaining.rows[0]][c]);
   }
   remaining.rows[0]++;
 
-  // 2 - capture elements in maximum column index (and subtract 1 from max col idx) - traversing rows
+  // 2 - Traverse rows of outermost remaining column
   for (let r = remaining.rows[0]; r <= remaining.rows[1]; r++) {
     resultArr.push(squareArray[r][remaining.cols[1]]);
   }
   remaining.cols[1]--;
 
-  // 3 - capture elements in reverse order in maximum row index (and subtract 1 from max row idx) - traversing columns
+  // 3 - Traverse columns of bottom remaining row in reverse order
   for (let c = remaining.cols[1]; c >= remaining.cols[0]; c--) {
     resultArr.push(squareArray[remaining.rows[1]][c]);
   }
@@ -33,7 +39,7 @@ function traverseLastQuarter(squareArray, resultArr, remaining) {
   const numRows = squareArray.length;
   const numCols = numRows;    // because the array is square
 
-  // 4 - capture elements in reverse order in minimum column index (and add 1 to min col idx) - traversing rows
+  // 4 - Traverse rows of leftmost remaining column in reverse order
   for (let r = remaining.rows[1]; r >= remaining.rows[0]; r--) {
     resultArr.push(squareArray[r][remaining.cols[0]]);
   }
